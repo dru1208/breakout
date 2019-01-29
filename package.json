@@ -12,7 +12,6 @@
   "license": "UNLICENSED",
   "dependencies": {
     "express": "^4.16.4",
-    "jquery": "^3.3.1",
     "rxjs": "^6.3.3"
   },
   "devDependencies": {
