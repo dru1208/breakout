@@ -11,7 +11,10 @@ class GameBoard {
 		this.context = context;
 		this.brickRows = brickRows;
 		this.brickColumns = brickColumns;
+		this.addTotalBricks();
 	}
+
+// getter methods for drawing
 
 	getContext() {
 		return this.context;
@@ -29,6 +32,8 @@ class GameBoard {
 		return this.bricks;
 	}
 
+// movement methods
+
 	movePaddleRight() {
 		console.log('movepaddleright called')
 		this.paddle.moveRight();
@@ -40,7 +45,21 @@ class GameBoard {
 	}
 
 
-	addBrickRow(rowNumber) {
+	moveBall() {
+		// console.log("ball moved!")
+	}
+
+// constructor methods
+
+	addTotalBricks() {
+		let count = 1;
+		while (count <= this.brickRows) {
+			this._addBrickRow(count);
+			count ++;
+		}
+	}
+
+	_addBrickRow(rowNumber) {
 		const brickRow = []
 		let count = 1;
 		const brickY = 40 * rowNumber;
@@ -53,14 +72,6 @@ class GameBoard {
 			count ++;
 		}
 		this.bricks[`${rowNumber}`] = brickRow;
-	}
-
-	addTotalBricks() {
-		let count = 1;
-		while (count <= this.brickRows) {
-			this.addBrickRow(count);
-			count ++;
-		}
 	}
 }
 

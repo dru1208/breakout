@@ -12,8 +12,9 @@ export const movementStart$ = onKeyDown
     filter(e => shouldFire ? e : undefined),
     filter(e => findMovementDirection(e.key)),
     map(e => {
+      console.log("keyodwn")
       shouldFire = false
-      return {type: "movement", action: "start", direction: movementKeys[e.key], }
+      return {type: "movement", direction: movementKeys[e.key] }
     }))
 
 const onKeyUp = fromEvent(document, "keyup");
@@ -23,5 +24,5 @@ export const movementStop$ = onKeyUp
     filter(e => findMovementDirection(e.key)),
     map(e => {
       shouldFire = true
-      return {type: "movement", action: "stop", direction: "none"}
+      return {type: "movement", direction: "none" }
     }))

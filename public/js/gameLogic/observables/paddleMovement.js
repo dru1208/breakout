@@ -1,23 +1,24 @@
 import { movement$, deltaTime$ } from "./trigger.js"
 import { combineLatest } from "rxjs"
 import { pipe, map, filter } from "rxjs/operators"
-import gameBoard from "../objects/gameBoard.js"
 
 export const setDirection$ = movement$
   .pipe(
-    map(({ direction, action }) => {
+    map(({ direction }) => {
       return {type: "direction", direction}
     }))
 
 export const movePaddle$ = combineLatest(deltaTime$, setDirection$)
   .pipe(
     map(trigger => {
+      console.log("combineLatest trigger")
       return {
         deltaTime: trigger[0],
         setDirection: trigger[1]
       }
     }),
     map(({ setDirection, deltaTime }) => {
+      const { gameBoard } = deltaTime
       if (setDirection.direction === "right") {
         gameBoard.movePaddleRight()
       } else if (setDirection.direction === "left") {

@@ -1,8 +1,7 @@
 import { drawPaddle, drawBricks, drawBall } from "./drawVisuals.js"
 
-export const generateInitialBoard = gameBoard => {
+export const drawBoard = gameBoard => {
 	drawPaddle(gameBoard);
-	gameBoard.addTotalBricks();
 	drawBricks(gameBoard);
 	drawBall(gameBoard);
 }
