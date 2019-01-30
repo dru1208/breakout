@@ -31,6 +31,15 @@ class Paddle {
 			this.paddleX = this.paddleX - this.movementRate;
 		}
 	}
+
+	getPaddleConfig() {
+		return {
+			x: this.paddleX,
+			y: this.paddleY,
+			width: this.paddleWidth,
+			height: this.paddleHeight,
+		}
+	}
 }
 
 export default Paddle;

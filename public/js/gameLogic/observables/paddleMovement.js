@@ -11,7 +11,6 @@ export const setDirection$ = movement$
 export const movePaddle$ = combineLatest(deltaTime$, setDirection$)
   .pipe(
     map(trigger => {
-      console.log("combineLatest trigger")
       return {
         deltaTime: trigger[0],
         setDirection: trigger[1]

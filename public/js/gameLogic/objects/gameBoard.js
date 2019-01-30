@@ -1,10 +1,12 @@
 import Brick from "./brick.js"
 import Paddle from "./paddle.js"
 import Ball from "./ball.js"
-import { brickRows, brickColumns, brickWidth, canvasWidth, colorScheme } from "../../constants/constants.js"
+import { brickRows, brickColumns, brickWidth, canvasWidth, canvasHeight, colorScheme } from "../../constants/constants.js"
 
 class GameBoard {
 	constructor(context) {
+		this.width = canvasWidth;
+		this.height = canvasHeight;
 		this.bricks = {};
 		this.paddle = new Paddle();
 		this.ball = new Ball();
@@ -35,18 +37,35 @@ class GameBoard {
 // movement methods
 
 	movePaddleRight() {
-		console.log('movepaddleright called')
 		this.paddle.moveRight();
 	}
 
 	movePaddleLeft() {
-		console.log('movepaddleleft called')
 		this.paddle.moveLeft();
 	}
 
 
 	moveBall() {
-		// console.log("ball moved!")
+		const { x, y, height } = this.paddle.getPaddleConfig();
+		const { radius, location } = this.ball.getDrawingConfig();
+		const paddleLocation = {x: x, y: y - radius - height}
+		if (this._checkBallOut(location)) {
+			this.ball.setBallOnPaddle(paddleLocation);
+			this.stopBallMovement();
+		}	else if (this._checkBallBounce(location)) {
+			this.ball.moveBall(paddleLocation);
+		} else {
+			this.ball.changeDirection();
+			this.ball.moveBall(paddleLocation);
+		}
+	}
+
+	startBallMovement() {
+		this.ball.startMoving();
+	}
+
+	stopBallMovement() {
+		this.ball.stopMoving();
 	}
 
 // constructor methods
@@ -58,6 +77,8 @@ class GameBoard {
 			count ++;
 		}
 	}
+
+// private
 
 	_addBrickRow(rowNumber) {
 		const brickRow = []
@@ -72,6 +93,26 @@ class GameBoard {
 			count ++;
 		}
 		this.bricks[`${rowNumber}`] = brickRow;
+	}
+
+	_checkBallBounce({ xCoordinate, yCoordinate }) {
+		return this._withinBoundsX(xCoordinate) && this._withinBoundsY(yCoordinate)
+	}
+
+	_checkBallOut({ yCoordinate }) {
+		return this._outsideBoundsY(yCoordinate);
+	}
+
+	_withinBoundsX(coordinate) {
+		return coordinate >= 0 && coordinate <= this.width;
+	}
+
+	_withinBoundsY(coordinate) {
+		return coordinate >= 0;
+	}
+
+	_outsideBoundsY(coordinate) {
+		return coordinate >= this.height;
 	}
 }
 

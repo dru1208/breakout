@@ -3,16 +3,17 @@ import { initialPaddleX, paddleY, paddleWidth, paddleHeight, canvasWidth, canvas
 export const drawPaddle = (gameBoard) => {
 	const paddle = gameBoard.getPaddle();
 	const context = gameBoard.getContext();
-	const { paddleX, paddleY, paddleWith, paddleHeight } = paddle.getPaddleDrawingConfig()
+	const { x, y, width, height } = paddle.getPaddleConfig()
+	const paddleX = x - (width / 2);
+	const paddleY = y - height;
 	context.beginPath();
 	context.fillStyle = "red";
-	context.clearRect(0, paddleY - paddleHeight + 20, canvasWidth, paddleHeight * 2)
-	context.fillRect(paddleX, paddleY, paddleWidth, paddleHeight);
+	context.fillRect(paddleX, paddleY, width, height);
 	context.closePath();
 }
 
 
-export const drawBrick = (context, brick) => {
+const drawBrick = (context, brick) => {
 	const { location, width, height, color } = brick.getDrawingConfig();
 	const { xCoordinate, yCoordinate } = location;
 	context.beginPath();
@@ -33,10 +34,16 @@ export const drawBall = (gameBoard) => {
 	const ball = gameBoard.getBall();
 	const context = gameBoard.getContext();
 	const { location, radius, startingAngle, endingAngle } = ball.getDrawingConfig();	
-	console.log(location)
 	const { xCoordinate, yCoordinate } = location;
 	context.beginPath();
 	context.arc(xCoordinate, yCoordinate, radius, startingAngle, endingAngle);
 	context.fill();
+	context.closePath();
+}
+
+export const clearBoard = (gameBoard) => {
+	const context = gameBoard.getContext();
+	context.beginPath();
+	context.clearRect(0, 0, canvasWidth, canvasHeight);
 	context.closePath();
 }

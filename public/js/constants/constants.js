@@ -16,6 +16,10 @@ export const brickGap = 3;
 export const ballRadius = 15;
 export const initialBallX = canvasWidth / 2;
 export const initialBallY = paddleY - ballRadius - paddleHeight;
+
+export const initialBallDirectionX = 2
+export const initialBallDirectionY = -2
+
 export const ballStartingAngle = 0;
 export const ballEndingAngle = Math.PI * 2;
 
@@ -24,6 +28,8 @@ export const movementKeys = {
   "a": "left",
   "ArrowLeft": "left",
   "d": "right",
-  "ArrowRight": "right"
+  "ArrowRight": "right",
+  "ArrowUp": "move",
+  "w": "move"
 }
 export const colorScheme = ["red", "blue", "yellow", "green", "orange", "black"]

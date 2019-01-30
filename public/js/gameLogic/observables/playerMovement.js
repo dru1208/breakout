@@ -1,6 +1,7 @@
 import { fromEvent } from "rxjs";
 import { pipe, filter, map, take } from "rxjs/operators";
 import { movementKeys } from "../../constants/constants.js"
+import gameBoard from "../objects/gameBoard.js"
 
 let shouldFire = true
 const findMovementDirection = key => movementKeys[key]
@@ -12,8 +13,10 @@ export const movementStart$ = onKeyDown
     filter(e => shouldFire ? e : undefined),
     filter(e => findMovementDirection(e.key)),
     map(e => {
-      console.log("keyodwn")
       shouldFire = false
+      if (movementKeys[e.key] === "move") {
+        gameBoard.startBallMovement()
+      }
       return {type: "movement", direction: movementKeys[e.key] }
     }))
 
